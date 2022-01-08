@@ -4,10 +4,11 @@ import { GetTasksFilterDto } from './dto/get-tasks-filters.dt';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { TasksRepository } from './tasks.repository';
 import { Task } from './tasks.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TasksService {
-    constructor(private taskRepository: TasksRepository){}
+    constructor(@InjectRepository(TasksRepository) private taskRepository: TasksRepository){}
 
     async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
         return await this.taskRepository.search(filterDto);
